@@ -1,0 +1,15 @@
+[{
+    "title":"Regla",
+    "price":60.00
+
+},
+{
+    "title":"Goma",
+    "price":35.00
+
+},
+{
+    "title":"Lapicera",
+    "price":50.00
+
+    }]
