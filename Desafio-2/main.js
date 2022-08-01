@@ -23,7 +23,7 @@ class Contenedor{
         product.id = 0;
         const array = await fs.readFileSync(this.fileName, 'utf8');
         const parsedArray = JSON.parse(array);
-        product.id = parsedArray.length++;
+        product.id = parsedArray.length + 1;
         parsedArray.push(product);
         await fs.writeFileSync(this.fileName, JSON.stringify(parsedArray));
         return product.id;
@@ -57,16 +57,16 @@ const main = async () => {
     const product = await instance.getById(1);
     console.log(product);
 
-    const test = await instance.save({name: 'test', price: 10});
+    const test = await instance.save({title: 'test', price: 10});
     console.log(test);
 
     await instance.deleteById(1);
     const products2 = await instance.getAll();
     products2.forEach(product => console.log(product.title, product.price));
 
+    //Una vez ejecutado el próximo método, se eliminan todos los productos del archivo.txt
     await instance.deleteAll();
-    const products3 = await instance.getAll();
-    products3.forEach(product => console.log(product.title, product.price));
+
 }
 
 main();
