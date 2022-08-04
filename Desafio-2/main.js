@@ -19,13 +19,11 @@ class Contenedor{
     }
 
     async save(product){
-    try{
-        product.id = 0;
         const array = await fs.readFileSync(this.fileName, 'utf8');
         const parsedArray = JSON.parse(array);
         let band = true;
         parsedArray.forEach(obj => { 
-            if(obj.name == product.name){ 
+            if(obj.title == product.title){ 
                 band = false;
                 }
             }
@@ -39,10 +37,8 @@ class Contenedor{
         return console.log('El producto ya existe');
     }
 }
-    catch(err){
-        console.log(err);
-    }
-}
+
+
 
     async deleteById(id){
         const array = await fs.readFileSync(this.fileName, 'utf8');
@@ -70,6 +66,9 @@ const main = async () => {
 
     const test = await instance.save({title: 'test', price: 10});
     console.log(test);
+
+    const test2 = await instance.save({title: 'test 2', price: 10});
+    console.log(test2);
 
     await instance.deleteById(1);
     const products2 = await instance.getAll();
