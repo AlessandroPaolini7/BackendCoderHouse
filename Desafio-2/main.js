@@ -23,11 +23,22 @@ class Contenedor{
         product.id = 0;
         const array = await fs.readFileSync(this.fileName, 'utf8');
         const parsedArray = JSON.parse(array);
+        let band = true;
+        parsedArray.forEach(obj => { 
+            if(obj.name == product.name){ 
+                band = false;
+                }
+            }
+        );
+        if(band){
         product.id = parsedArray.length + 1;
         parsedArray.push(product);
         await fs.writeFileSync(this.fileName, JSON.stringify(parsedArray));
         return product.id;
+    }else{
+        return console.log('El producto ya existe');
     }
+}
     catch(err){
         console.log(err);
     }
