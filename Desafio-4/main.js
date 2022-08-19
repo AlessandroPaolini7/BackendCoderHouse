@@ -92,13 +92,10 @@ class Contenedor {
         }
     }
 
-    async save(newDataTitle, newDataPrice, newDataThumbnail) {
+    async save(newData) {
         try {
         const allData = await this.getData();
         const parsedData = JSON.parse(allData);
-        newData.title = newDataTitle;
-        newData.price = newDataPrice;
-        newData.thumbnail = newDataThumbnail;
         newData.id = parsedData.length + 1;
         parsedData.push(newData);
         await fs.promises.writeFile(this._filename, JSON.stringify(parsedData));

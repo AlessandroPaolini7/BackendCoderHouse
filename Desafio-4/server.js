@@ -34,10 +34,8 @@ productosRouter.get('/:id', async (req, res) => {
 
 //POST/api/products
 productosRouter.post('/', async (req,res) => {
-    const newDataTitle =  req.body.title; 
-    const newDataPrice = req.body.price;
-    const newDataThumbnail = req.body.thumbnail;
-    const newProductId = await productosApi.save(newDataTitle, newDataPrice, newDataThumbnail);
+    const newData = {"title": req.body.title, "price": req.body.price, "thumbnail": req.body.thumbnail};
+    const newProductId = await productosApi.save(newData);
     res.status(200).send(`Producto agregado con el ID: ${newProductId}`);
 });
 
