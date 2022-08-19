@@ -4,6 +4,7 @@ class Contenedor {
     constructor(fileName) {
         this._filename = fileName;
         this._readFileOrCreateNewOne();
+        this.products = [];
     }
 
     async _readFileOrCreateNewOne() {
@@ -31,7 +32,6 @@ class Contenedor {
         try {
         const data = await this.getData();
         const parsedData = JSON.parse(data);
-
         return parsedData.find((producto) => producto.id === id);
         } catch (error) {
         console.log(
@@ -92,14 +92,12 @@ class Contenedor {
         }
     }
 
-    async save(object) {
+    async save(newData) {
         try {
         const allData = await this.getData();
         const parsedData = JSON.parse(allData);
-
-        object.id = parsedData.length + 1;
-        parsedData.push(object);
-
+        newData.id = parsedData.length + 1;
+        parsedData.push(newData);
         await fs.promises.writeFile(this._filename, JSON.stringify(parsedData));
         return object.id;
         } catch (error) {

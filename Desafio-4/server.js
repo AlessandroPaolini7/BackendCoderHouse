@@ -1,49 +1,49 @@
 const express = require('express');
-const app = express();
 const PORT = 8080;
 const Contenedor = require('./main.js');
-const products = new Contenedor('products.txt');
+const {Router} = express;
 
-app.use(express.static('public'));
+//
+const productosApi = new Contenedor('products.txt');
 
-const router = express.Router();
+const productosRouter = new Router();
 
-app.use('/api/productos', router);
+productosRouter.use(express.json());
+productosRouter.use(express.urlencoded({extended: true}));
 
 //GET/api/products
-router.get('/', async (req, res) => {
-    const array = await products.getAll();
+productosRouter.get('/', async (req, res) => {
+    const array = await productosApi.getAll();
     if(array.length > 0){
         res.send(array);
     }else{
         res.status(404).send('No hay productos');
     }
-})
+});
 
 //GET/api/products/:id
-router.get('/:id', async (req, res) => {
+productosRouter.get('/:id', async (req, res) => {
     const id = Number(req.params.id);
-    const product = await products.getById(id);
+    const product = await productosApi.getById(id);
     if(product != undefined){
         res.send(product);
     }else{
         res.status(404).send('No se encontró el producto');
     }
-})
+});
 
 //POST/api/products
-router.post('/', async (req,res) => {
-    const {body} = req;
-    const newProductId = await products.save(body);
+productosRouter.post('/', async (req,res) => {
+    const newData = {title: req.body.title, price: req.body.price, thumbnail: req.body.thumbnail};
+    const newProductId = await productosApi.save(newData);
     res.status(200).send(`Producto agregado con el ID: ${newProductId}`);
 });
 
-
 //PUT/api/products/:id
-router.put('/:id', async (req, res) => {
+productosRouter.put('/:id', async (req, res) => {
     const id = Number(req.params.id);
     const newData = req.body;
-    const product = await products.updateById(id, newData);
+    const product = await productosApi.updateById(id, newData);
     if(product != undefined){
         res.status(200).send(`El producto con ID: ${id} fue actualizado`);
     }else{
@@ -52,9 +52,9 @@ router.put('/:id', async (req, res) => {
 });
 
 //DELETE/api/products/:id
-router.delete('/:id', async (req, res) => {
+productosRouter.delete('/:id', async (req, res) => {
     const id = Number(req.params.id);
-    const product = await products.deleteById(id);
+    const product = await productosApi.deleteById(id);
     if(product != undefined){
         res.status(200).send(`El producto con ID: ${id} fue eliminado`);
     }else{
@@ -62,6 +62,13 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+
+const app = express();
+
+app.use(express.static('public'));
+
+app.use('/api/productos', productosRouter);
+
 const server = app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+    console.log(`Server running on port ${server.address().port}`);
+})
