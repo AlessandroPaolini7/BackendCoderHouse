@@ -3,7 +3,7 @@ const PORT = 8080;
 const Contenedor = require('./main.js');
 const {Router} = express;
 
-//
+
 const productosApi = new Contenedor('products.txt');
 
 const productosRouter = new Router();
@@ -36,7 +36,7 @@ productosRouter.get('/:id', async (req, res) => {
 productosRouter.post('/', async (req,res) => {
     const newData = {"title": req.body.title, "price": req.body.price, "thumbnail": req.body.thumbnail};
     const newProductId = await productosApi.save(newData);
-    res.status(200).send(`Producto agregado con el ID: ${newProductId}`);
+    res.status(200).send(`Producto agregado exitosamente con ID: ${newProductId}`);
 });
 
 //PUT/api/products/:id

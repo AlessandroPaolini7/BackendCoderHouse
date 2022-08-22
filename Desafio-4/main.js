@@ -99,7 +99,7 @@ class Contenedor {
         newData.id = parsedData.length + 1;
         parsedData.push(newData);
         await fs.promises.writeFile(this._filename, JSON.stringify(parsedData));
-        return object.id;
+        return newData.id;
         } catch (error) {
         console.log(
             `Error Code: ${error.code} | There was an error when trying to save an element`
