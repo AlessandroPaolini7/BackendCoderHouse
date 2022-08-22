@@ -35,8 +35,8 @@ productosRouter.get('/:id', async (req, res) => {
 //POST/api/products
 productosRouter.post('/', async (req,res) => {
     const newData = {"title": req.body.title, "price": req.body.price, "thumbnail": req.body.thumbnail};
-    const newProductId = await productosApi.save(newData);
-    res.status(200).send(`Producto agregado exitosamente con ID: ${newProductId}`);
+    const newProduct = await productosApi.save(newData);
+    res.status(200).send(`Producto ${newProduct.title} con el precio $${newProduct.price} y el thumbnail ${newProduct.thumbnail} agregado exitosamente con ID: ${newProduct.id}`);
 });
 
 //PUT/api/products/:id
