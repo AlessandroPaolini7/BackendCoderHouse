@@ -1,0 +1,27 @@
+include layout.pug
+
+html 
+    head
+        title='Lista de productos'
+    body
+        a(href='/') Agregar producto
+        h1='Lista de productos'
+        hr
+        if productos.length > 0
+            table 
+                tr 
+                    th='#ID'
+                    th='Nombre'
+                    th='Precio'
+                    th='Imagen'
+                for producto in productos
+                    tr
+                        td=producto.id
+                        td=producto.title
+                        td=producto.price
+                        td=producto.thumbnail
+        else 
+            h2='No hay productos :('
+    div.mt-3
+    a(href="./productos")
+        button.btn.btn-warning Agregar producto
