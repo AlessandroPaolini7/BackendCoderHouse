@@ -118,7 +118,6 @@
         })
         
         socket.on('listaMensajesActualizada', (data) => {
-            console.log(data);
             $('#historial-mensajes').empty();
             data.forEach( (mensaje) => {
                 $('#historial-mensajes').append(
@@ -128,7 +127,6 @@
         })
         
         socket.on('listaMensajesBienvenida', (data) => {
-            console.log(data);
             $('#historial-mensajes').empty();
             data.forEach( (mensaje) => {
                 $('#historial-mensajes').append(
