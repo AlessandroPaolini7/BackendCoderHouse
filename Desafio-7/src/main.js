@@ -116,30 +116,49 @@
             //en este metodo estoy trabado, no se como hacer para que me agregue el objeto al array de productos
             //que ya existe en el archivo. Encuentra bien el carrito, encuentra bien el producto, pero no se como
             //agregarlo al array de productos del carrito
-            try{
-                id = Number(id);
-                const data = await this.getData();
-                const parsedData = JSON.parse(data);
-                const cartToBeUpdated = parsedData.find(
-                (producto) => producto.id === id
-                );
-                if (cartToBeUpdated) {
-                console.log(cartToBeUpdated);
-                let index = 0;
-                cartToBeUpdated[index].productos.push(objectToAdd);
-                index ++;
-                await fs.promises.writeFile(this._filename, JSON.stringify(parsedData));
+
+            try {
+                const cartSelected = this.getById(id);
+                console.log(cartSelected);
+                if (cartSelected == null) return;
+                const cartSelectedParsed = JSON.parse(cartSelected);
+                cartSelectedParsed.products.push(objectToAdd);
+                await fs.promises.writeFile(this._filename, JSON.stringify(cartSelectedParsed));
                 return true;
-                } else {
-                console.log(`ID ${id} does not exist in the file`);
-                return null;
-                }
-            }catch(error){
-                `Error Code: ${error.code} | There was an error when trying to update an element by its ID (${id})`
-            }} else {
-                return false;
+            } catch (error) {
+                console.log(
+                    `Error Code: ${error.code} | There was an error when trying to add an element to an array by its ID (${id})`
+                );
             }
+        } else {
+            return false;
+        }
     }
+
+    //         try{
+    //             id = Number(id);
+    //             const data = await this.getData();
+    //             const parsedData = JSON.parse(data);
+    //             const cartToBeUpdated = parsedData.find(
+    //             (producto) => producto.id === id
+    //             );
+    //             if (cartToBeUpdated) {
+    //             console.log(cartToBeUpdated);
+    //             let index = 0;
+    //             cartToBeUpdated[index].productos.push(objectToAdd);
+    //             index ++;
+    //             await fs.promises.writeFile(this._filename, JSON.stringify(parsedData));
+    //             return true;
+    //             } else {
+    //             console.log(`ID ${id} does not exist in the file`);
+    //             return null;
+    //             }
+    //         }catch(error){
+    //             `Error Code: ${error.code} | There was an error when trying to update an element by its ID (${id})`
+    //         }} else {
+    //             return false;
+    //         }
+    // }
 
     async removeFromArrayById(id, objectToRemoveId, keyName) {
         try {
