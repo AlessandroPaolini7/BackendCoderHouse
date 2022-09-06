@@ -94,9 +94,7 @@ routerCart.delete('/:id', async (req, res) => {
 routerCart.post('/:id/productos', async(req,res) => {
     const {id} = req.params;
     const { body } = req;
-    
     const product = await contenedor.getById(body['id']);    
-    
     if (product) {
         console.log(product);
         const cartExist = await carrito.addToArrayById(id, {"products": product});
