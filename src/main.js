@@ -43,16 +43,19 @@
     async getById(id) {
         id = Number(id);
         try {
-        const data = await this.getData();
-        const parsedData = JSON.parse(data);
-        return parsedData.find((producto) => producto.id === id);
-        } catch (error) {
-        console.log(
-            `Error Code: ${error.code} | There was an error when trying to get an element by its ID (${id})`
-        );
+            const data = await this.getData();
+            const parsedData = JSON.parse(data);
+            console.log("hola")
+            object = parsedData.find((producto) => producto.id === id);
+            return object;
+            } catch (error) {
+            console.log(
+                `Error Code: ${error.code} | There was an error when trying to get an element by its ID (${id})`
+            );
+            }
         }
-    }
 
+    
     async deleteById(id) {
         try {
         id = Number(id);
